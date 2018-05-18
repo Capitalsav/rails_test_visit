@@ -1,0 +1,19 @@
+.container-fluid
+  p#notice = notice
+
+  p
+    strong Name:
+    = @user.name
+  p
+    strong Date:
+    = @user.date
+  p
+    strong Number:
+    = @user.number
+  p
+    strong Description:
+    = @user.description
+
+  = link_to 'Edit', edit_user_path(@user)
+  '  |
+  = link_to 'Back', users_path
