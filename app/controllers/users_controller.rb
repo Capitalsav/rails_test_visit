@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :validate_file_format, only: :upload
 
   # GET /users
   # GET /users.json
@@ -62,7 +63,6 @@ class UsersController < ApplicationController
   end
 
   def new_upload
-
   end
 
   def upload
@@ -81,5 +81,12 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :date, :number, :description)
+    end
+
+    def validate_file_format
+      format = params[:file_csv].original_filename.split('.').last
+      unless format == 'csv'
+        redirect_back fallback_location: root_path
+      end
     end
 end
