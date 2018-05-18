@@ -69,10 +69,14 @@ class UsersController < ApplicationController
   end
 
   def upload
-    User::parse_csv_users(params[:file_csv])
     respond_to do |format|
-      flash[:success] =' "Information uploaded"'
-      format.html { redirect_to users_path }
+      if User::parse_csv_users(params[:file_csv])
+        flash[:success] = 'Information uploaded'
+        format.html { redirect_to users_path }
+      else
+        flash[:danger] = 'Invalid data'
+        format.html { redirect_back fallback_location: root_path }
+      end
     end
   end
 
