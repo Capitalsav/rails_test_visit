@@ -9,6 +9,12 @@
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
+    <% flash.each do |key, value| %>
+      <div class="flash-notification alert alert-<%= key %>" id="flash">
+        <%= value %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

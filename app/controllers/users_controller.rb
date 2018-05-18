@@ -29,6 +29,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        flash[:success] = 'User was successfully created.'
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -43,6 +44,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        flash[:success] = 'User was successfully updated.'
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -57,7 +59,8 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      flash[:success] = 'User was successfully destroyed.'
+      format.html { redirect_to users_url }
       format.json { head :no_content }
     end
   end
@@ -68,6 +71,7 @@ class UsersController < ApplicationController
   def upload
     User::parse_csv_users(params[:file_csv])
     respond_to do |format|
+      flash[:success] =' "Information uploaded"'
       format.html { redirect_to users_path }
     end
   end
@@ -84,9 +88,12 @@ class UsersController < ApplicationController
     end
 
     def validate_file_format
-      format = params[:file_csv].original_filename.split('.').last
-      unless format == 'csv'
-        redirect_back fallback_location: root_path
+      format_file = params[:file_csv].original_filename.split('.').last
+      unless format_file == 'csv'
+        respond_to do |format|
+          flash[:danger] = "Invalid format - #{format_file}! Only CSV available!"
+          format.html {  redirect_back fallback_location: root_path }
+        end
       end
     end
 end
