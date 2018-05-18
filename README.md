@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project was made as a test task. It shows how you can upload data from csv file to database.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: 2.4.1
 
-* System dependencies
+* Database creation: rake db:create | rake db:migrate
 
-* Configuration
+* Run server: rails s
 
-* Database creation
+## Author:
 
-* Database initialization
+#### Anton Storchak
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
